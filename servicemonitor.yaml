@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fly-connectome-monitor
+  labels:
+    release: my-release
+spec:
+  selector:
+    matchLabels:
+      app: fly-connectome
+  endpoints:
+  - port: metrics
+    interval: 5s
+    path: /metrics
