@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fly-connectome-deployment
+  labels:
+    app: fly-connectome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fly-connectome
+  template:
+    metadata:
+      labels:
+        app: fly-connectome
+    spec:
+      containers:
+      - name: simulator
+        image: fly-connectome:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+          name: metrics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fly-connectome-service
+  labels:
+    app: fly-connectome
+spec:
+  selector:
+    app: fly-connectome
+  ports:
+  - name: metrics
+    port: 8000
+    targetPort: 8000
