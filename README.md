@@ -1,3 +1,5 @@
+[English](README.md) | [Русский](README.ru.md)
+
 # Drosophila Connectome Simulator & Observability Stack
 
 A cloud-native demo project: a Python microservice simulating spike propagation dynamics across a biological connectome graph of *Drosophila melanogaster*. The service is containerized, deployed to a local Kubernetes cluster (Minikube), and monitored using the Prometheus Operator and Grafana.
