@@ -6,7 +6,6 @@ from collections import defaultdict
 
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 
-# Настройка читаемого логирования вместо обычных print
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -14,7 +13,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("fly_connectome")
 
-# 1. Объявляем метрики Prometheus
+
 SPIKES_TOTAL = Counter(
     "fly_spikes_total",
     "Суммарное количество спайков конкретного нейрона",
@@ -53,7 +52,7 @@ def load_connectome(filepath: str):
     return graph, input_nodes, terminal_nodes
 
 def simulate_wave(graph, input_nodes, terminal_nodes, layer_delay_ms=15):
-    # Подаем стимул на 1-2 случайных сенсора
+    
     sample_size = random.randint(1, 2)
     current_layer = set(random.sample(list(input_nodes), sample_size))
 
@@ -61,17 +60,17 @@ def simulate_wave(graph, input_nodes, terminal_nodes, layer_delay_ms=15):
     all_wave_neurons = set()
 
     while current_layer:
-        # Фиксируем спайки текущего слоя
+        
         for neuron in current_layer:
             SPIKES_TOTAL.labels(neuron_id=neuron).inc()  # +1 в счетчик этого нейрона
             all_wave_neurons.add(neuron)
 
-            # Если импульс добежал до финиша, записываем задержку
+            
             if neuron in terminal_nodes:
                 latency = time.perf_counter() - start_time
                 SIGNAL_LATENCY.observe(latency)
 
-        # Рассчитываем передачу к следующему слою
+        
         next_layer = set()
         for neuron in current_layer:
             for target, weight in graph.get(neuron, []):
@@ -83,7 +82,7 @@ def simulate_wave(graph, input_nodes, terminal_nodes, layer_delay_ms=15):
 
         current_layer = next_layer
 
-    # Обновляем Gauge — сколько нейронов активировалось в этом цикле
+    
     ACTIVE_NEURONS.set(len(all_wave_neurons))
     logger.info(f"Залп завершен. Активных нейронов: {len(all_wave_neurons)}")
 
