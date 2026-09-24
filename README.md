@@ -12,11 +12,23 @@ A cloud-native demo project: a Python microservice simulating spike propagation 
 
 ## Architecture
 
+```text
 [ Synapses CSV ] ──> [ Python Simulator Pod ] ──(Exposes :8000/metrics)
-▲
-│ Scrapes every 5s
-[ ServiceMonitor (CRD) ]
-│
-[ Prometheus Operator ] ──> [ Grafana Dashboard ]
-Graph Model & Tech Stack
-The simulation parses synapses.csv across functional layers (ORN, PN, KC, MBON, DN). The stack includes Python 3.11, Docker, Minikube, Prometheus Operator, and Grafana. Full configuration details, metrics (fly_spikes_total, etc.), deployment commands, and PromQL queries can be found in the referenced repository.
+                             ▲
+                             │ Scrapes every 5s
+                    [ ServiceMonitor (CRD) ]
+                             │
+                  [ Prometheus Operator ] ──> [ Grafana Dashboard ]
+```
+
+### Graph Model & Tech Stack
+
+The simulation parses `synapses.csv` across functional biological layers:
+* **ORN:** Olfactory Receptor Neurons (Sensory input)
+* **PN:** Projection Neurons
+* **KC:** Kenyon Cells (Pattern recognition)
+* **MBON:** Mushroom Body Output Neurons
+* **DN:** Descending Neurons (Motor commands)
+
+**Core Stack:** Python 3.11, Docker, Minikube (Kubernetes), CoreOS Prometheus Operator, Grafana.
+
