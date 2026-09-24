@@ -1,4 +1,4 @@
-> 🚀 **Looking for the distributed, multi-node mesh architecture?**  
+>  **Looking for the distributed, multi-node mesh architecture?**  
 > Check out **[FlyOps-2.0](https://github.com/Rasl37/FlyOps-2.0)** — a resilient 19-neuron connectome cluster featuring dynamic L7 failover, CoreDNS discovery, and Grafana Node Graph visualization.
 
 [English](README.md) | [Русский](README.ru.md)
